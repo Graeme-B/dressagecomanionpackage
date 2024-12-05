@@ -434,6 +434,10 @@ class DressageCompanionState
 
   @override
   Widget build(BuildContext context) {
+    if (_iv.showBanner && _iv.isBannerAdReady) {
+      _iv.bannerAdIndex = 1 - _iv.bannerAdIndex;
+    }
+
     return Scaffold(
       key: UniqueKey(),
       appBar: AppBar(
@@ -446,6 +450,16 @@ class DressageCompanionState
         children: <Widget>[
           mainDisplay(),
           buildButtons(),
+          // *** Google Ads ***
+          if (_iv.showBanner && _iv.isBannerAdReady)
+            Align(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                width: _iv.bannerAds[_iv.bannerAdIndex].size.width.toDouble(),
+                height: _iv.bannerAds[_iv.bannerAdIndex].size.height.toDouble(),
+                child: AdWidget(ad: _iv.bannerAds[_iv.bannerAdIndex]),
+              ),
+            ),
         ],
       ),
     );
